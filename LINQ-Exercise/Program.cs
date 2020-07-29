@@ -52,7 +52,7 @@ namespace LINQ_Exercise
             {
                 Console.WriteLine(s.StudentName);
             }
-            Console.WriteLine("");
+            Console.WriteLine(""); 
         }
     }
 }

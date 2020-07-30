@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace LINQ_Exercise
@@ -11,6 +12,9 @@ namespace LINQ_Exercise
     }
     class Program
     {
+        delegate bool IsTeenager(Student stud);
+        delegate bool IsWanted(Student stud, int age);
+
         static void Main(string[] args)
         {
             Student[] studentArray = {
@@ -52,7 +56,37 @@ namespace LINQ_Exercise
             {
                 Console.WriteLine(s.StudentName);
             }
-            Console.WriteLine(""); 
+            Console.WriteLine("");
+
+            //delegate
+            IsTeenager isTeenager = delegate (Student s) { return s.Age > 12 && s.Age < 20; };
+            Student stud = new Student() { Age = 25 };
+            Console.WriteLine(isTeenager(stud));
+
+            //delegate with 2 parameters
+            IsWanted isWanted = (s, age) => s.StudentName.StartsWith("R") && s.Age >= age;
+
+            // Student collection
+            IList<Student> studentList = new List<Student>()
+            {
+                new Student() { StudentID = 1, StudentName = "John", Age = 13} ,
+                new Student() { StudentID = 2, StudentName = "Moin",  Age = 21 } ,
+                new Student() { StudentID = 3, StudentName = "Bill",  Age = 18 } ,
+                new Student() { StudentID = 4, StudentName = "Ram" , Age = 20} ,
+                new Student() { StudentID = 5, StudentName = "Ron" , Age = 15 }
+            };
+
+            Console.WriteLine("");
+
+            var teenAgerStudent = studentList.Where
+                (s => s.StudentName.StartsWith("R") && s.Age >= 20);
+
+            Console.WriteLine("Teen age Students:");
+
+            foreach (Student std in teenAgerStudent)
+            {
+                Console.WriteLine(std.StudentName);
+            }
         }
     }
 }
